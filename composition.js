@@ -2,45 +2,28 @@ class CookieFactory {
 	constructor() {
 		this.listCookies=[]
 	}
-	//  create(options) {
-	// 	for(let i=0;i<options.length;i++) {
-	// 		if(options[i] == "peanut butter") {
-	// 			let peanutButter = new PeanutButter()
-	// 			this.listCookies.push(peanutButter)
-	// 		}else if(options[i] == "chocolate chip"){
-	// 			let chocolateChip = new ChocolateChip()
-	// 			this.listCookies.push(chocolateChip)
-	// 		}else{
-	// 			let otherCookie = new OtherCookie(options[i])
-	// 			this.listCookies.push(otherCookie)
-	// 		}
-	// 	}
-	// }
 
-	// create(options) {
-	// 	for(let i=0)
-	// }
 	create(options) {
 		for(let i=0;i<options.length;i++) {
 			var arrIngred=[]
 			var cookie = options[i].split(" = ")[0]
 			var ingred = options[i].split("=")[1].split(",")
 			//console.log(ingredients)
-			for(let j=0;j<ingred.length;j++) {
-				var ingred2 = ingred[j].split(":")
-				//console.log(ingredients2)
-				var ingredients = new Ingredients(ingred2[1],ingred2[0])
-				arrIngred.push(ingredients)
-			}
+			// for(let j=0;j<ingred.length;j++) {
+			// 	var ingred2 = ingred[j].split(":")
+			// 	//console.log(ingredients2)
+			// 	var ingredients = new Ingredients(ingred2[1],ingred2[0])
+			// 	arrIngred.push(ingredients)
+			// }
 			//console.log(cookie)
 			if(cookie == "peanut butter") {
-				let peanutButter = new PeanutButter(arrIngred)
+				let peanutButter = new PeanutButter(ingred)
 				this.listCookies.push(peanutButter)
 			}else if(cookie == "chocolate chip"){
-				let chocolateChip = new ChocolateChip(arrIngred)
+				let chocolateChip = new ChocolateChip(ingred)
 				this.listCookies.push(chocolateChip)
 			}else{
-				let otherCookie = new OtherCookie(cookie,arrIngred)
+				let otherCookie = new OtherCookie(cookie,ingred)
 				this.listCookies.push(otherCookie)
 			}
 			
@@ -83,8 +66,19 @@ class Cookie {
 	constructor(name,peanut_count,ingredients) {
 		this.name = name
 		this.status="mentah"
-		this.ingredients=ingredients
+		this.ingredients=this.assignIngredient(ingredients)
 		this.peanut_count=peanut_count
+	}
+
+	assignIngredient(ingredients) {
+		var arrIngred =[]
+		for(let j=0;j<ingredients.length;j++) {
+				var ingred2 = ingredients[j].split(":")
+				//console.log(ingredients2)
+				var resep = new Ingredients(ingred2[1],ingred2[0])
+				arrIngred.push(resep)
+		}
+		return arrIngred
 	}
 
 }
@@ -114,7 +108,7 @@ var options = fs.readFileSync("./ingredients.txt").toString().split("\n")
 let cookieFactory = new CookieFactory()
 
 cookieFactory.create(options);
- //console.log(cookieFactory.listCookies)
+// console.log(cookieFactory.listCookies)
 let sugarFreeFoods = cookieFactory.cookieRecommendation("tuesday")
 console.log("sugar free cakes are:")
 for(let i=0;i<sugarFreeFoods.length;i++) {
