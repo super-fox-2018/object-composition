@@ -1,18 +1,18 @@
 const fs = require('fs')
 class Ingredient{
-	constructor(ingeredients){
+	constructor(materialName,amount){
 		//this.cookieName = cookieName
-		this.materialName = ''
-		this.amount = 'amount'
+		this.materialName = materialName
+		this.amount = amount
 	}
 }
 
 class Cookie {
-	constructor(name){
+	constructor(name,ingredients){
 		this.name = name
 		this.status = "mentah"
 		// Cari resep cookie yang berana this.name dari ingredients
-		this.ingredients = []
+		this.ingredients = ingredients
 		this.has_sugar = null
 	}
 	bake(){
@@ -21,41 +21,47 @@ class Cookie {
 }
 
 class PeanutButter extends Cookie {
-	constructor(){
-		super('peanut butter')
+	constructor(ingredients){
+		super('peanut butter',ingredients)
 		// this.name = 'peanut butter'
 		this.peanut_count = 100
 	}
 }
 
 class ChocholateChip extends Cookie{
-	constructor(){
-		super('chocolate chip')
+	constructor(ingredients){
+		super('chocolate chip',ingredients)
 		//this.name = 'chocolate chip'
 		this.choc_chip_count = 200
 	}
 }
 class OtherCookie extends Cookie{
-	constructor(name){
-		super(name)
+	constructor(name,ingredients){
+		super(name,ingredients)
 		//this._name = name
 		this.other_count = 150
 	}
 }
 
 class CookieFactory{
-	static create(options){
+	static create(ingredients){
 		let arrBaked = []
-		for(var i=0;i<options.length-1;i++){
-			if (options[i]=='peanut butter') {
-				arrBaked.push(new PeanutButter())
+		for(var i=0;i<ingredients.length;i++){
+			let arrIngred=[]
+			for(var j=0;j<ingredients[i].ingredients.length;j++){
+				
+				let resep = new Ingredient(ingredients[i].ingredients[j][1],ingredients[i].ingredients[j][0])
+				arrIngred.push(resep)
 			}
-			else if (options[i]==='chocolate chip') {
-				arrBaked.push(new ChocholateChip())
-			}
-			else{
-				arrBaked.push(new OtherCookie(options[i]))
-			}
+			if (ingredients[i].cookieName==='peanut butter') {
+					arrBaked.push(new PeanutButter(arrIngred))
+				}
+				else if (ingredients[i].cookieName==='chocolate chip') {
+					arrBaked.push(new ChocholateChip(arrIngred))
+				}
+				else{
+					arrBaked.push(new OtherCookie(ingredients[i].cookieName,arrIngred))
+				}
 		}
 		return arrBaked
 	}
@@ -85,17 +91,26 @@ for(var i=0;i<recipe1.length;i++){
 	ingredients.push(cookieRecipe);
 }
 
-let bahan = new Ingredient(ingredients)
-console.log(ingredients[0].cookieName)
-console.log(ingredients[0].ingredients[0][0]);
-console.log(ingredients[0].ingredients[0][1])
-console.log(ingredients[0].ingredients[1][0]);
-console.log(ingredients[0].ingredients[1][1])
+//let bahan = new Ingredient()
+for(var i=0;i<ingredients.length;i++){
+	//console.log(ingredients[i].cookieName)
+	for(var j=0;j<ingredients[i].ingredients.length;j++){
+		//console.log(ingredients[i].ingredients[j])
+	}
+}
+//console.log(coklat)
+//console.log(ingredients)
+// console.log(ingredients[0].cookieName)
+// console.log(ingredients[0].ingredients[0][0]);
+// console.log(ingredients[0].ingredients[0][1])
+// console.log(ingredients[0].ingredients[1][0]);
+// console.log(ingredients[0].ingredients[1][1])
 
 
 //console.log(options)
 
-let batch_of_cookies = CookieFactory.create(options)
+let batch_of_cookies = CookieFactory.create(ingredients)
+console.log(batch_of_cookies)
 //console.log(batch_of_cookies)
 
 // let sugarFreeFoods = CookieFactory.cookieRecommendation('tuesday',batch_of_cookies)
