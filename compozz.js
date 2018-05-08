@@ -48,28 +48,6 @@ class CookieFactory {
 		}
 		
 	}
-
-	cookieRecommendation(day) {
-		var arrRecomend=[]
-		for(let i=0;i<this.listCookies.length;i++) {
-			var count=1
-			for(let j=0;j<this.listCookies[i].ingredients.length;j++) {
-				if(day == "tuesday") {
-					if(this.listCookies[i].ingredients[j].name == " sugar")	 {
-						count*=0
-					}
-				}	
-			}
-			if(count==1) {
-				arrRecomend.push(this.listCookies[i].name)
-			}
-			
-		}
-		return arrRecomend
-			
-	}
-
-
 }
 
 class Ingredients {
@@ -87,6 +65,9 @@ class Cookie {
 		this.peanut_count=peanut_count
 	}
 
+	bake() {
+		this.status = "selesai dimasak"
+	}
 }
 
 class PeanutButter extends Cookie {
@@ -111,13 +92,9 @@ class OtherCookie extends Cookie {
 var fs = require("fs")
 var options = fs.readFileSync("./ingredients.txt").toString().split("\n")
 
-let cookieFactory = new CookieFactory()
+ let cookieFactory = new CookieFactory()
 
 cookieFactory.create(options);
- //console.log(cookieFactory.listCookies)
-let sugarFreeFoods = cookieFactory.cookieRecommendation("tuesday")
-console.log("sugar free cakes are:")
-for(let i=0;i<sugarFreeFoods.length;i++) {
-	console.log(sugarFreeFoods[i])
-}
+ console.log(cookieFactory.listCookies)
 
+//console.log(options)
