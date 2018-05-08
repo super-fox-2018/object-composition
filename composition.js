@@ -57,24 +57,11 @@ class CookieFactory {
 
     for (var i = 0; i < options.length - 1; i++) {
       if (options[i] == 'peanut butter') {
-
-        let peanut = new PeanutButter(option[i])
-        peanut.ingredients = cookie.ingredients;
-        peanut.name = options[i];
-        listcookie.push(peanut);
+        listcookie.push(new PeanutButter(option[i]));
       } else if (options[i] == 'chocolate chip') {
-
-        let coco = new ChocholateChip(option[i])
-
-        coco.ingredients = cookie.ingredients;
-        coco.name = options[i];
-        listcookie.push(coco);
+        listcookie.push(new ChocholateChip(option[i]));
       } else {
-        var othercookie = new OtherCookie(options[i])
-
-        othercookie.ingredients = cookie.ingredients;
-        othercookie.name = options[i];
-        listcookie.push(othercookie);
+        listcookie.push(new OtherCookie(options[i]));
       }
     }
     return listcookie
