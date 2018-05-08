@@ -50,7 +50,7 @@ class CookieFactory{
 			let arrIngred=[]
 			for(var j=0;j<ingredients[i].ingredients.length;j++){
 				
-				let resep = new Ingredient(ingredients[i].ingredients[j][1],ingredients[i].ingredients[j][0])
+				let resep = new Ingredient(ingredients[i].ingredients[j][0],ingredients[i].ingredients[j][1])
 				arrIngred.push(resep)
 			}
 			if (ingredients[i].cookieName==='peanut butter') {
@@ -66,7 +66,19 @@ class CookieFactory{
 		return arrBaked
 	}
 	static cookieRecommendation(hari,obj){
-
+		for(var i=0;i<obj.length;i++){
+			//console.log(obj[i].has_sugar)
+			for(var j=0;j<obj[i].ingredients.length;j++){
+					//console.log(obj[i].ingredients[j].materialName)
+				if (obj[i].ingredients[j].materialName==='sugar') {
+					obj[i].has_sugar = true
+				}
+			}
+			if (obj[i].has_sugar===null) {
+				console.log(`${obj[i].name}`)
+			}
+		}
+		//console.log(obj)
 	}
 }
 
@@ -98,23 +110,14 @@ for(var i=0;i<ingredients.length;i++){
 		//console.log(ingredients[i].ingredients[j])
 	}
 }
-//console.log(coklat)
-//console.log(ingredients)
-// console.log(ingredients[0].cookieName)
-// console.log(ingredients[0].ingredients[0][0]);
-// console.log(ingredients[0].ingredients[0][1])
-// console.log(ingredients[0].ingredients[1][0]);
-// console.log(ingredients[0].ingredients[1][1])
-
 
 //console.log(options)
 
 let batch_of_cookies = CookieFactory.create(ingredients)
-console.log(batch_of_cookies)
 //console.log(batch_of_cookies)
+console.log('sugar free cakes are:')
+let sugarFreeFoods = CookieFactory.cookieRecommendation('tuesday',batch_of_cookies)
 
-// let sugarFreeFoods = CookieFactory.cookieRecommendation('tuesday',batch_of_cookies)
-// console.log('sugar free cakes are:')
 // for(var i=0;i<sugarFreeFoods.length;i++){
 // 	console.log(sugarFreeFoods[i].name)
 // }
